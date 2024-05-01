@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class SnippetSearcherRunnerApplication
 
 fun main(args: Array<String>) {
-	runApplication<SnippetSearcherRunnerApplication>(*args)
+    runApplication<SnippetSearcherRunnerApplication>(*args)
 }
