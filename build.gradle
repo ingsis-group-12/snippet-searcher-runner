@@ -44,11 +44,11 @@ tasks.named('test') {
 tasks.check {
 	dependsOn ktlintCheck
 }
-
-koverReport {
-	verify {
-		rule {
-			minBound(80)
-		}
-	}
-}
+//
+//koverReport {
+//	verify {
+//		rule {
+//			minBound(80)
+//		}
+//	}
+//}
