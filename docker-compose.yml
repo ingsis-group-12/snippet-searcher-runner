@@ -5,9 +5,9 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8081:8081"
+      - "8083:8083"
     expose:
-      - 8081
+      - 8083
 
 volumes:
   postgres-data:
