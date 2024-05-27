@@ -18,8 +18,8 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd ~/projects/snippet-infrastructure
-            docker-compose pull
-            docker-compose up -d
+            docker compose pull
+            docker compose up -d
 
   build-dev:
     name: Build
@@ -34,5 +34,5 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd ~/projects/snippet-infrastructure
-            docker-compose pull
-            docker-compose up -d
+            docker compose pull
+            docker compose up -d
