@@ -8,7 +8,7 @@ import kotlinx.serialization.json.JsonObject
 data class LinterInput(
     @field:NotNull(message = "content type is missing")
     val content: String?,
-    val version: String? = "1.1",
+    val language: String? = "printscript 1.1",
     @field:NotNull(message = "linting rules are missing")
     val rules: JsonObject?,
 )

@@ -25,4 +25,11 @@ class ExceptionControllerAdvice {
 
         return ResponseEntity(body, HttpStatus.BAD_REQUEST)
     }
+
+    @ExceptionHandler(LanguageNotSupport::class)
+    fun handleLanguageNotSupport(ex: LanguageNotSupport): ResponseEntity<String> {
+        return ResponseEntity(ex.message, HttpStatus.CONFLICT)
+    }
 }
+
+class LanguageNotSupport(override val message: String) : Exception()

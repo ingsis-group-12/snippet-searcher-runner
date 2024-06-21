@@ -1,0 +1,4 @@
+let a : string = readEnv("some_env");
+let b : boolean = true;
+println(a);
+println(b);
