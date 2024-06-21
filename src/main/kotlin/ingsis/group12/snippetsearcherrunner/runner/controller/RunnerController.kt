@@ -15,23 +15,23 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/runner")
-class RunnerController(private val runnerService: RunnerService) {
+class RunnerController(private val runnerService: RunnerService) : RunnerControllerSpec {
     @PostMapping("/interpret")
-    fun interpret(
+    override fun interpret(
         @Valid @RequestBody input: ExecutorInput,
     ): ExecutorOutput {
         return runnerService.interpret(input)
     }
 
     @PostMapping("/analyze")
-    fun analyze(
+    override fun analyze(
         @Valid @RequestBody input: LinterInput,
     ): LinterOutput {
         return runnerService.analyze(input)
     }
 
     @PostMapping("/format")
-    fun format(
+    override fun format(
         @Valid @RequestBody input: FormatterInput,
     ): FormatterOutput {
         return runnerService.format(input)
