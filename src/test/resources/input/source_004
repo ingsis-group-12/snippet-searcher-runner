@@ -1,0 +1,2 @@
+const b :string =               "Hello, World!";
+             println(b);
