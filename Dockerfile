@@ -1,7 +1,7 @@
 FROM gradle:latest as build
 COPY  . /home/gradle/src
 WORKDIR /home/gradle/src
-RUN gradle assemble
+RUN gradle assemble --warning-mode all
 FROM openjdk:17-jdk-slim
 EXPOSE 8080
 RUN mkdir /app
