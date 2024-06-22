@@ -7,6 +7,7 @@ plugins {
 	id 'org.jetbrains.kotlin.plugin.spring' version '1.9.23'
 	id "org.jetbrains.kotlinx.kover" version "0.7.6"
 	id 'org.jlleitschuh.gradle.ktlint' version '12.1.0'
+	id "org.jetbrains.kotlin.plugin.serialization" version "1.9.23"
 }
 
 group = 'ingsis.group-12'
@@ -17,8 +18,16 @@ java {
 }
 
 repositories {
-	gradlePluginPortal()
 	mavenCentral()
+	mavenLocal()
+	maven {
+		name = 'GitHubPackages'
+		url = uri("https://maven.pkg.github.com/ingsis-group-12/printscript")
+		credentials {
+			username = project.findProperty('gpr.user') ?: System.getenv('GITHUB_ACTOR')
+			password = project.findProperty('gpr.key') ?: System.getenv('GITHUB_TOKEN')
+		}
+	}
 }
 
 dependencies {
@@ -26,7 +35,16 @@ dependencies {
 	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
 	implementation 'org.jetbrains.kotlin:kotlin-reflect'
 	implementation 'org.jetbrains.kotlinx:kover-gradle-plugin:0.7.6'
-	implementation 'org.jlleitschuh.gradle:ktlint-gradle:12.1.0'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+	implementation 'PrintScript:lexer:1.1.22'
+	implementation 'PrintScript:interpreter:1.1.22'
+	implementation 'org.springframework.boot:spring-boot-starter-validation:3.3.0'
+	implementation 'PrintScript:sca:1.1.22'
+	implementation 'PrintScript:formatter:1.1.22'
+	implementation 'PrintScript:parser:1.1.22'
+	implementation 'PrintScript:common:1.1.22'
+	implementation 'PrintScript:iterator:1.1.22'
+	implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
@@ -54,11 +72,20 @@ tasks.register('setupHooks') {
 	}
 }
 
-//
-//koverReport {
-//	verify {
-//		rule {
-//			minBound(80)
-//		}
-//	}
-//}
+tasks.register('checkGitHooksPath') {
+	doLast {
+		def desiredHooksPath = '.githooks'
+		def currentHooksPath = 'git config core.hooksPath'.execute().text.trim()
+
+		if (currentHooksPath != desiredHooksPath) {
+			println "Git hooks path is not set correctly."
+			println "Setting git hooks path to $desiredHooksPath"
+			"git config core.hooksPath $desiredHooksPath".execute().waitFor()
+			println "Git hooks path set to $desiredHooksPath"
+		} else {
+			println "Git hooks path is already set correctly."
+		}
+	}
+}
+
+build.dependsOn checkGitHooksPath

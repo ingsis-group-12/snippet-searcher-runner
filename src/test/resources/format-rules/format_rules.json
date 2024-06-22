@@ -1,0 +1,29 @@
+{
+  "rules": [
+    {
+      "type": "spaceBeforeColon",
+      "allowed": true,
+      "maxInt": null
+    },
+    {
+      "type": "spaceAfterColon",
+      "allowed": true,
+      "maxInt": null
+    },
+    {
+      "type": "spaceAroundEqual",
+      "allowed": true,
+      "maxInt": null
+    },
+    {
+      "type": "newlineBeforePrintln",
+      "allowed": false,
+      "maxInt": 1
+    },
+    {
+      "type": "spacesAfterStartLine",
+      "allowed": true,
+      "maxInt": 3
+    }
+  ]
+}

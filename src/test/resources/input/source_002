@@ -1,0 +1,3 @@
+let a_snake : string = readInput("Some input");
+let b_fire : string = " fire";
+println(a_snake + b_fire);

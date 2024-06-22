@@ -1,0 +1,5 @@
+{
+  "enforce_literal_or_identifier_in_println_rule": false,
+  "enforce_literal_or_identifier_in_read_input_rule": false,
+  "identifier_rule": "camelCase"
+}
