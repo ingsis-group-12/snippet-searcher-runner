@@ -1,4 +1,11 @@
 FROM gradle:latest as build
+
+ARG USERNAME
+ENV GITHUB_ACTOR ${USERNAME}
+
+ARG TOKEN
+ENV GITHUB_TOKEN ${TOKEN}
+
 COPY  . /home/gradle/src
 WORKDIR /home/gradle/src
 RUN gradle assemble --warning-mode all

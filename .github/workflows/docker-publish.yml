@@ -39,3 +39,6 @@ jobs:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+          build-args: |
+            "USERNAME=${{ github.actor }}"
+            "TOKEN=${{ secrets.GITHUB_TOKEN }}"
