@@ -1,5 +1,5 @@
 {
-  "enforce_literal_or_identifier_in_println_rule": true,
-  "enforce_literal_or_identifier_in_read_input_rule": true,
-  "identifier_rule": "snake_case"
+  "enforceLiteralOrIdentifierInPrintlnRule": true,
+  "enforceLiteralOrIdentifierInReadInputRule": true,
+  "identifierRule": "snake_case"
 }

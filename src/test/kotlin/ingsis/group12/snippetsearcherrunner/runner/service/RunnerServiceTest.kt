@@ -55,7 +55,7 @@ class RunnerServiceTest {
         val output = File("${config.outputPath}/output_003")
         val lintingRules = File("${config.lintingRulesPath}/analyze_rules_001.json").readText()
         val content = Json.parseToJsonElement(lintingRules).jsonObject
-        val runnerInput = LinterInput(content = input.readText(), rules = content)
+        val runnerInput = LinterInput(content = input.readText(), rules = content.toString())
         val result = runnerService.analyze(runnerInput)
         assertEquals(output.readText(), result.output)
     }
@@ -65,7 +65,7 @@ class RunnerServiceTest {
         val input = File("${config.inputPath}/source_003")
         val lintingRules = File("${config.lintingRulesPath}/analyze_rules_000.json").readText()
         val content = Json.parseToJsonElement(lintingRules).jsonObject
-        val runnerInput = LinterInput(content = input.readText(), rules = content)
+        val runnerInput = LinterInput(content = input.readText(), rules = content.toString())
         val result = runnerService.analyze(runnerInput)
         println(result.output)
         assertEquals(true, result.output.contains("ReportFailure"))

@@ -2,7 +2,6 @@ package ingsis.group12.snippetsearcherrunner.runner.input
 
 import jakarta.validation.constraints.NotNull
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonObject
 
 @Serializable
 data class LinterInput(
@@ -10,5 +9,5 @@ data class LinterInput(
     val content: String?,
     val language: String? = "printscript 1.1",
     @field:NotNull(message = "linting rules are missing")
-    val rules: JsonObject?,
+    val rules: String?,
 )

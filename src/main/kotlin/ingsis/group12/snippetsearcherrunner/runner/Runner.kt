@@ -11,7 +11,7 @@ import edu.austral.ingsis.gradle.parser.InputContext
 import edu.austral.ingsis.gradle.parser.factory.createComposeParser
 import edu.austral.ingsis.gradle.parser.impl.ProgramNodeParser
 import edu.austral.ingsis.gradle.sca.ReportSuccess
-import edu.austral.ingsis.gradle.sca.adapter.json.JsonComposeAdapter
+import edu.austral.ingsis.gradle.sca.adapter.StringToJsonAdapter
 import edu.austral.ingsis.gradle.sca.factory.createComposeAnalyzer
 import ingsis.group12.snippetsearcherrunner.runner.input.ExecutorInput
 import ingsis.group12.snippetsearcherrunner.runner.input.FormatterInput
@@ -52,14 +52,14 @@ class Runner(private val version: String) {
     fun analyze(input: LinterInput): LinterOutput {
         try {
             val ast = createAstNode(input.content!!)
-            val rule = JsonComposeAdapter().adapt(input.rules!!)
+            val rule = StringToJsonAdapter().adapt(input.rules!!)
             val composeLinter = createComposeAnalyzer()
             return when (val output = composeLinter.analyze(ast, listOf(rule))) {
                 ReportSuccess -> LinterOutput("ReportSuccess", "")
                 else -> LinterOutput("ReportFailure", output.toString())
             }
         } catch (e: Exception) {
-            return LinterOutput("ReportFailure", e.message.toString())
+            return LinterOutput("", e.message.toString())
         }
     }
 
