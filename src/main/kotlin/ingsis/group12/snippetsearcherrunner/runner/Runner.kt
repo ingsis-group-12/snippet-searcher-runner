@@ -22,15 +22,22 @@ import ingsis.group12.snippetsearcherrunner.runner.output.LinterOutput
 import ingsis.group12.snippetsearcherrunner.runner.util.RunnerEnvReader
 import ingsis.group12.snippetsearcherrunner.runner.util.RunnerInputReader
 import ingsis.group12.snippetsearcherrunner.runner.util.getRules
+import org.slf4j.LoggerFactory
 
 class Runner(private val version: String) {
+    private val logger = LoggerFactory.getLogger(Runner::class.java)
+
     fun execute(input: ExecutorInput): ExecutorOutput {
         try {
+            logger.info("Interpreting code ")
             val lexer = LexerDirector().createComposeLexer(version)
+            logger.info("Lexing...")
             val lexerIterator = LexerIterator(lexer, input.content!!.byteInputStream().bufferedReader())
+            logger.info("Parsing...")
             val composeParser = createComposeParser()
             val parserIterator = ParserIterator(lexerIterator, composeParser)
             val collector = PrinterCollector()
+            logger.info("Interpreting...")
             var interpreter =
                 ComposeInterpreter(
                     emitter = collector,
@@ -45,32 +52,39 @@ class Runner(private val version: String) {
             }
             return ExecutorOutput(collector.getPrintedValues(), "")
         } catch (e: Exception) {
+            logger.error(e.message)
             return ExecutorOutput(listOf(), e.message.toString())
         }
     }
 
     fun analyze(input: LinterInput): LinterOutput {
         try {
+            logger.info("Analyzing code")
             val ast = createAstNode(input.content!!)
             val rule = StringToJsonAdapter().adapt(input.rules!!)
             val composeLinter = createComposeAnalyzer()
+            logger.info("Analyzing...")
             return when (val output = composeLinter.analyze(ast, listOf(rule))) {
                 ReportSuccess -> LinterOutput("ReportSuccess", "")
                 else -> LinterOutput("ReportFailure", output.toString())
             }
         } catch (e: Exception) {
+            logger.error(e.message)
             return LinterOutput("", e.message.toString())
         }
     }
 
     fun format(input: FormatterInput): FormatterOutput {
         try {
+            logger.info("Formatting code")
             val ast = createAstNode(input.content!!)
             val rules = getRules(input.rules!!)
+            logger.info("Formatting...")
             val formatter = createDefaultFormatter()
             val formatted = formatter.format(ast, rules)
             return FormatterOutput(formatted, "")
         } catch (e: Exception) {
+            logger.error(e.message)
             return FormatterOutput(input.content!!, e.message.toString())
         }
     }
