@@ -64,6 +64,20 @@ tasks.check {
 	dependsOn ktlintCheck
 }
 
+
+koverReport {
+		filters {
+			excludes {
+				classes("ingsis.group12.snippetsearcherrunner.relic.CorrelationIdFilter",
+						"ingsis.group12.snippetsearcherrunner.relic.RequestLogFilter",
+						"ingsis.group12.snippetsearcherrunner.runner.exception.ExceptionControllerAdvice",
+				)
+			}
+		}
+}
+
+
+
 tasks.register('setupHooks') {
 	doLast {
 		def setupHooksFile = file("${rootProject.projectDir}/.githooks/setup-hooks")
