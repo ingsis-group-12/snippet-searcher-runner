@@ -9,21 +9,27 @@ import ingsis.group12.snippetsearcherrunner.runner.output.ExecutorOutput
 import ingsis.group12.snippetsearcherrunner.runner.output.FormatterOutput
 import ingsis.group12.snippetsearcherrunner.runner.output.LinterOutput
 import ingsis.group12.snippetsearcherrunner.runner.util.languageSupport
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 
 @Service
 class RunnerService {
+    private val logger = LoggerFactory.getLogger(RunnerService::class.java)
+
     fun interpret(input: ExecutorInput): ExecutorOutput {
+        logger.info("Interpreting code ")
         val version = getVersion(input.language!!)
         return Runner(version).execute(input)
     }
 
     fun analyze(input: LinterInput): LinterOutput {
+        logger.info("Analyzing code")
         val version = getVersion(input.language!!)
         return Runner(version).analyze(input)
     }
 
     fun format(input: FormatterInput): FormatterOutput {
+        logger.info("Formatting code")
         val version = getVersion(input.language!!)
         return Runner(version).format(input)
     }
